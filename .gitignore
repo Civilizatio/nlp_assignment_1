@@ -1,0 +1,9 @@
+# tex tmp files
+code/*.aux
+code/*.log
+code/*.fls
+code/*.fdb_latexmk
+code/*.out
+code/*.synctex.gz
+code/*.pdf
+
