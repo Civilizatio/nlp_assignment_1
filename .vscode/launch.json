@@ -1,0 +1,108 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "CBOW",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "cbow/train_cbow.py",
+            "args": [
+                "--batch_size", "64",
+                "--embedding_dim", "100",
+                "--context_size", "2",
+                "--epochs", "1",
+                "--lr", "0.002",
+                "--dataset_path", "wiki_test.txt",
+                "--exp_dir", "exps/cbow_exp",
+                "--cuda", "9"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "DATASET_DIR": "/home/KeLi/datasets"
+            }
+        },
+        {
+            "name": "CBOW Neg Sampling",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "cbow/train_cbow_neg.py",
+            "args": [
+                "--batch_size", "64",
+                "--embedding_dim", "100",
+                "--context_size", "2",
+                "--num_neg_samples", "5",
+                "--power", "0.75",
+                "--epochs", "1",
+                "--lr", "0.002",
+                "--dataset_path", "wiki_test.txt",
+                "--exp_dir", "exps/cbow_exp_neg",
+                "--cuda", "9"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "DATASET_DIR": "/home/KeLi/datasets"
+            }
+        },
+        {
+            "name": "CBOW Enhanced",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "cbow/train_enhanced_cbow.py",
+            "args": [
+                "--batch_size", "64",
+                "--embedding_dim", "100",
+                "--context_size", "2",
+                "--num_neg_samples", "5",
+                "--power", "0.75",
+                "--epochs", "1",
+                "--lr", "0.002",
+                "--syn_weight", "0.3",
+                "--hyper_weight", "0.2",
+                "--dataset_path", "wiki_test.txt",
+                "--exp_dir", "exps/cbow_exp_neg_enhanced",
+                "--eval_freq","1000",
+                "--cuda", "9"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "DATASET_DIR": "/home/KeLi/datasets"
+            }
+
+        },
+        {
+            "name": "Test Similarity",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "cbow/test_similarity.py",
+            "args": [
+                "--model_path", "cbow_300.pth",
+                "--wordsim_path", "wordsim353/combined.csv",
+                "--exp_dir", "exps/cbow_1000_300",
+                "--cuda", "9",
+                // "--neg_sampling"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "DATASET_DIR": "/home/KeLi/datasets"
+            }
+        },
+        {
+            "name": "Evaluate sentence",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "cbow/evaluate_sentences.py",
+            "args": [
+                "--data_path", "msr_paraphrase_test.txt",
+                "--model_path", "cbow_1000_100/cbow_100.pth",
+                "--model_type", "1",
+                "--cuda", "5",
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "DATASET_DIR": "/home/KeLi/datasets"
+            }
+
+
+        }
+    ]
+}

@@ -1,0 +1,275 @@
+\documentclass[UTF8,a4paper,12pt]{article}
+\usepackage[left=2.5cm, right=2.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage{amsmath, amsfonts, amssymb, mathrsfs}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[labelsep=none]{caption}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\DeclareMathAlphabet{\mathsfbr}{OT1}{cmss}{m}{n}%for math sans serif (cmss)
+\SetMathAlphabet{\mathsfbr}{bold}{OT1}{cmss}{bx}{n}%for math sans serif (cmss)
+\DeclareRobustCommand{\msf}[1]{%
+  \ifcat\noexpand#1\relax\msfgreek{#1}\else\mathsfbr{#1}\fi%for math sans serif (cmss)
+}
+
+\DeclareRobustCommand{\mcal}[1]{%
+  \ifcat\noexpand#1\relax\mathnormal{#1}\else\cal{#1}\fi
+}
+\DeclareRobustCommand{\BM}[1]{%
+  \ifcat\noexpand#1\relax\bm{\boldUppercaseItalicGreek{#1}}\else\bm{#1}\fi
+}
+
+\makeatletter
+\newcommand{\msfgreek}[1]{\csname s\expandafter\@gobble\string#1\endcsname}
+\newcommand{\boldUppercaseItalicGreek}[1]{\csname var\expandafter\@gobble\string#1\endcsname}
+\makeatother
+
+%% Sans Serif Greek
+\DeclareFontEncoding{LGR}{}{} % or load \usepackage{textgreek}
+\DeclareSymbolFont{sfgreek}{LGR}{cmss}{m}{n}
+\SetSymbolFont{sfgreek}{bold}{LGR}{cmss}{bx}{n}
+\DeclareMathSymbol{\salpha}{\mathord}{sfgreek}{`a}
+\DeclareMathSymbol{\sbeta}{\mathord}{sfgreek}{`b}
+\DeclareMathSymbol{\sgamma}{\mathord}{sfgreek}{`g}
+\DeclareMathSymbol{\sdelta}{\mathord}{sfgreek}{`d}
+\DeclareMathSymbol{\sepsilon}{\mathord}{sfgreek}{`e}
+\DeclareMathSymbol{\szeta}{\mathord}{sfgreek}{`z}
+\DeclareMathSymbol{\seta}{\mathord}{sfgreek}{`h}
+\DeclareMathSymbol{\stheta}{\mathord}{sfgreek}{`j}
+\DeclareMathSymbol{\siota}{\mathord}{sfgreek}{`i}
+\DeclareMathSymbol{\skappa}{\mathord}{sfgreek}{`k}
+\DeclareMathSymbol{\slambda}{\mathord}{sfgreek}{`l}
+\DeclareMathSymbol{\smu}{\mathord}{sfgreek}{`m}
+\DeclareMathSymbol{\snu}{\mathord}{sfgreek}{`n}
+\DeclareMathSymbol{\sxi}{\mathord}{sfgreek}{`x}
+\DeclareMathSymbol{\somicron}{\mathord}{sfgreek}{`o}
+\DeclareMathSymbol{\spi}{\mathord}{sfgreek}{`p}
+\DeclareMathSymbol{\srho}{\mathord}{sfgreek}{`r}
+\DeclareMathSymbol{\ssigma}{\mathord}{sfgreek}{`s}
+\DeclareMathSymbol{\stau}{\mathord}{sfgreek}{`t}
+\DeclareMathSymbol{\supsilon}{\mathord}{sfgreek}{`u}
+\DeclareMathSymbol{\sphi}{\mathord}{sfgreek}{`f}
+\DeclareMathSymbol{\schi}{\mathord}{sfgreek}{`q}
+\DeclareMathSymbol{\spsi}{\mathord}{sfgreek}{`y}
+\DeclareMathSymbol{\somega}{\mathord}{sfgreek}{`w}
+\let\svarepsilon\sepsilon
+\let\svartheta\stheta
+\let\svarpi\spi
+\let\svarrho\srho
+\DeclareMathSymbol{\svarsigma}{\mathord}{sfgreek}{`c}
+\let\svarphi\sphi
+\DeclareMathSymbol{\sGamma}{\mathalpha}{sfgreek}{`G}
+\DeclareMathSymbol{\sDelta}{\mathalpha}{sfgreek}{`D}
+\DeclareMathSymbol{\sTheta}{\mathalpha}{sfgreek}{`J}
+\DeclareMathSymbol{\sLambda}{\mathalpha}{sfgreek}{`L}
+\DeclareMathSymbol{\sXi}{\mathalpha}{sfgreek}{`X}
+\DeclareMathSymbol{\sPi}{\mathalpha}{sfgreek}{`P}
+\DeclareMathSymbol{\sSigma}{\mathalpha}{sfgreek}{`S}
+\DeclareMathSymbol{\sUpsilon}{\mathalpha}{sfgreek}{`U}
+\DeclareMathSymbol{\sPhi}{\mathalpha}{sfgreek}{`F}
+\DeclareMathSymbol{\sPsi}{\mathalpha}{sfgreek}{`Y}
+\DeclareMathSymbol{\sOmega}{\mathalpha}{sfgreek}{`W}
+
+%% Math symbol command
+\newcommand{\V}[1]{\bm{#1}} %%  vector
+\newcommand{\M}[1]{\BM{#1}} %%  matrix
+\newcommand{\Set}[1]{\mcal{#1}} %%  set
+\newcommand{\rv}[1]{\MakeLowercase{\msf{#1}}} %% random variable
+\newcommand{\RV}[1]{\bm{\MakeLowercase{\msf{#1}}}}  %% random vector
+\newcommand{\RM}[1]{\bm{\MakeUppercase{\msf{#1}}}}  %% random matrix
+\newcommand{\RS}[1]{\MakeUppercase{\msf{#1}}} %% random set
+
+
+\begin{document}
+
+\begin{center}
+    Natual Language Processsing\\
+    Spring 2025\\
+    \vspace{0.25cm}
+	\underline{\textbf{Assignment 1}}\\
+    \vspace{0.5cm}
+    \textbf{Name} \ \underline{Ke Li}  \hfill \textbf{Student No.} \ \underline{2024210837} \\
+    \vspace{0.1cm}
+\end{center}
+\hrule
+\vspace{0.2cm}
+
+\section{Word2Vec}
+\subsection{Word2Vec Implementation}
+
+The task there is to implement a simple version of Word2Vec, which is a popular model for learning word embeddings. The model is trained on a small subset of the English Wikipedia. Before training, the text is processed. I implement a Word2Vec model based on Continuous Bag of Words (CBOW), with or without Negative sampling. Below is the implementation of the Word2Vec model.
+
+\subsubsection{Data Preprocessing}
+
+I use a subset of the English Wikipedia as the training data, which is part of the
+\href{https://dumps.wikimedia.org/enwiki/20241201/enwiki-20241201-pages-articles-multistream1.xml-p1p41242.bz2}{\texttt{enwiki-20241201-pages-articles-multistream1.xml-p1p41242.bz2}}. Because the original data is too large, I only use the first \textbf{1000} lines of the data for training. 
+
+The data preprocessing steps are as follows:
+\begin{enumerate}
+    \item Tokenization: I use the default tokenizer in the \texttt{gensim.corpora.wikicorpus} package to tokenize the text, which is based on the regular expression \texttt{r'\textasciicircum[\textbackslash w\textbackslash'\textquotedbl]+\$'}. The minimum length of the token is set to 2, and the maximum length is set to 15.
+    
+    \item Lowercasing: I convert all the tokens to lowercase.
+    
+    \item Remove stopwords: I remove the stopwords from the tokens. The English stopwords are defined in the \texttt{nltk.corpus.stopwords} package.
+    
+\end{enumerate}
+
+The code for data preprocessing is \texttt{cbow/create\_corpus.py}.
+
+\subsubsection{Word2Vec Model}
+
+The model is based on the Continuous Bag of Words (CBOW) architecture. The basic idea of CBOW is to predict the target word based on the context words. The model architecture is as follows:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./figures/cbow.png}
+    \caption{\quad CBOW Model Architecture}
+    \label{fig:cbow}
+\end{figure}
+
+So the model has two \texttt{Embedding} layers, one for the input words and the other for the output words. The input words are the context words, and the output word is the target word. The model is trained to minimize the negative log-likelihood of the target word given the context words.
+
+To show the principle of the model, let me denote the input words (context words) as $w_{m-k}, w_{m-(k-1)}, \ldots, w_{m-1}, w_{m+1}, w_{2}, \ldots, w_{m+k}$, and the target word as $w_m$. The vocabulary size is $V>m$, and the embedding dimension is $d$. The model parameters are the input embedding matrix $\M{W}_{\text{in}} \in \mathbb{R}^{V \times d}$, the output embedding matrix $\M{W}_{\text{out}} \in \mathbb{R}^{V \times d}$. After the embedding layers, the input words are averaged to get the input vector $v_m = \frac{1}{2k} \sum_{i=-k,i\neq 0}^k \M{W}_{\text{in}}[w_{i+m}]$, and the output embedding vector is $u_n = \M{W}_{\text{out}}[w_n], n=1,2,\ldots,V$. The model is trained to minimize the negative log-likelihood of the target word given the context words, which is defined as:
+
+\begin{equation}
+    \begin{aligned}
+        \mathcal{L}(\theta) &= -\log p(w_m|w_{m-k}, w_{m-(k-1)}, \ldots, w_{m-1}, w_{m+1}, w_{2}, \ldots, w_{m+k}; \theta) \\
+        &= -\log \frac{\exp(u_m^T v_m)}{\sum_{n=1}^V \exp(u_n^T v_m)} \\
+        &= -u_m^T v_m + \log \sum_{n=1}^V \exp(u_n^T v_m)
+    \end{aligned}
+\end{equation}
+
+To implement the model above, we need to create the dataset based on the context words and the target words. In each sentence, we use the context words to predict the target word. The context words are the input, and the target word is the output. The window size is set to 5 (namely the context size k is 2). For the beginning and the end of the sentence, we pad the sentence with the special token \texttt{<UNK>}. The code for creating the dataset is \texttt{cbow/create\_dataset.py}.
+
+And the training code is \texttt{cbow/train\_cbow.py}. The model is trained with the Adam optimizer, and the learning rate is set to 0.002. The number of epochs is set to 10. The model is trained on the first 1000 lines of the English Wikipedia, and the vocabulary size is set to 126317. The embedding dimension is set to 100, 300, and 500, respectively. The performance of the model is discussed in the next section.
+
+\paragraph{Negative Sampling}
+
+The drawback of the softmax function is that it is computationally expensive when the vocabulary size is large. We must update all the output weights for each training sample, which is time-consuming. To address this issue, we can use the negative sampling technique. The idea of negative sampling is to sample a small number of negative samples (usually 5-20) for each positive sample. The model is trained to distinguish the positive sample from the negative samples. The negative sampleing method is a simplified version of Noise Contrastive Estimation (NCE). 
+
+The negative samples are sampled from the noise distribution, which is the unigram distribution of the vocabulary. The probability of sampling a word $w$ is defined as $P(w) = \frac{f(w)^{0.75}}{\sum_{w'} f(w')^{0.75}}$, where $f(w)$ is the frequency of the word $w$ in the training data. The negative samples are sampled from the noise distribution. The code for negative sampling is \texttt{cbow/train\_cbow\_neg.py}.
+
+For theroetical details, we denote the negative samples as $w_{m,1}, w_{m,2}, \ldots, w_{m,N}$, where $N$ is the number of negative samples. The loss function is defined as:
+
+\begin{equation}
+    \begin{aligned}
+        \mathcal{L}(\theta) &= -\log p(w_m|w_{m-k}, w_{m-(k-1)}, \ldots, w_{m-1}, w_{m+1}, w_{2}, \ldots, w_{m+k}; \theta) \\
+        &= -\log \sigma(u_m^T v_m) - \sum_{n=1}^N \log \sigma(-u_n^T v_m)
+    \end{aligned}
+\end{equation}
+
+where $\sigma(x) = \frac{1}{1+\exp(-x)}$ is the sigmoid function. The model is trained to minimize the negative log-likelihood of the target word and the negative samples. We can see that the computing cost is reduced from $O(V)$ to $O(N)$, which is much more efficient.
+
+However, I generate the negative samples for all the target words in the dataset, which is quite time-consuming. So I change the negative sampling method to sample the negative samples for each positive sample in the training process. The code for negative sampling is \texttt{cbow/create\_dataset\_neg.py}.
+
+\subsection{Word2Vec Improvements}
+
+There are three improvements in the instructions for the Word2Vec model:
+
+\begin{itemize}
+    \item Incorporating word sense disambiguation: there are different senses for the same word, so one word may have different embeddings to learn. 
+    \item Leveraging external word knowledge sources: we can use the external knowledge sources to improve the word embeddings, such as WordNet, BabelNet, etc.
+    \item Evaluation character-level embeddings: we can evaluate the character-level embeddings to improve the word embeddings.
+\end{itemize}
+
+I implement the second improvement by incorporating the external knowledge source WordNet. WordNet is a lexical database of English, which is used to improve the word embeddings. The theroetical details are as follows: we only consider the sense from the context words, while we ignore the relationship among different target words. We use the external knowledge to find the synonyms and hypernyms of the target word, and we use the synonyms and hypernyms to improve the word embeddings. We add the synonyms and hypernyms loss to the original loss function. The loss function is defined as:
+
+\begin{equation}
+    \begin{aligned}
+        \mathcal{L}(\theta) &= \mathcal{L}_{\text{CBOW}} + \lambda_{syn} MSE(\V{v}_m, \V{v}_{\text{syn}}) + \lambda_{hyp} \text{cos\_sim}(\V{v}_m, \V{v}_{\text{hyp}})
+    \end{aligned}
+\end{equation}
+
+where $\mathcal{L}_{\text{CBOW}}$ is the original loss function, $\V{v}_m$ is the original word embedding, $\V{v}_{\text{syn}}$ is the synonym embedding, $\V{v}_{\text{hyp}}$ is the hypernym embedding, $\lambda_{syn}$ and $\lambda_{hyp}$ are the hyperparameters, $MSE(\cdot)$ is the mean squared error, and $\text{cos\_sim}(\cdot)$ is the cosine similarity. The code for incorporating WordNet is \texttt{cbow/train\_enhanced\_cbow.py}.
+
+\section{Pretrained Model Embedding Generation}
+
+In this section, I generate the word embeddings based on the pretrained Word2Vec model in Huggingface. I use the \texttt{openbmb/MiniCPM-1B-sft-bf16} model. The methods of extracting the word embeddings are implemented in the \texttt{cbow/evaluate\_sentences.py}.
+
+\section{Evaluation}
+
+In this section, I evaluate the performance of the Word2Vec model based on the following metrics:
+
+\begin{itemize}
+    \item Word Similarity Task: I use the WordSim-353 dataset to evaluate the word similarity task. The WordSim-353 dataset contains 353 word pairs, and each word pair is annotated with a similarity score. The similarity score is in the range of 0 to 10. The evaluation metric is the Spearman correlation coefficient between the predicted similarity score and the annotated similarity score.
+    \item Paraphrase Detection Task: I use the MRPC dataset to evaluate the paraphrase detection task. The MRPC test dataset contains 1726 sentence pairs, and each sentence pair is annotated with a label (0 for non-paraphrase and 1 for paraphrase). The evaluation metric is the accuracy of the model.
+\end{itemize}
+
+The code for evaluation is \texttt{cbow/test\_similarity.py} and \texttt{cbow/evaluate\_sentences.py}.
+
+\subsection{Word Similarity Task}
+
+I compute the Spearman correlation
+coefficient between the predicted similarity score and the annotated similarity score. The results are shown in Table \ref{tab:cbow_results}.
+
+The Spearman correlation shows the performance of the Word2Vec model on the word similarity task. It ranges from -1 to 1, where 1 means the model has a perfect correlation with the annotated similarity score, and -1 means the model has a perfect negative correlation with the annotated similarity score. The results are shown in Table \ref{tab:cbow_results}. (The 500-dim results are not available for the CBOW model and the CBOW-Enhanced model, and the 300-dim of the CBOW-Enhanced model.The former is due to the memory issue, and the latter is due to the time issue.) 
+
+We can draw the following conclusions from the results:
+\begin{itemize}
+    \item The CBOW model has the best performance on the word similarity task. Because it uses the full negative samples (all vocabulary) for each positive sample, which can capture the word similarity better. The enhanced CBOW with negative sampling has a better performance than the CBOW model with negative sampling. This shows that the external knowledge source can improve the word embeddings.
+    \item The performance of the model decreases as the embedding dimension increases. This is because the training data I use is two small, the model is overfitting when the embedding dimension is too large. The model has a better generalization ability when the embedding dimension is small.
+\end{itemize}
+
+\begin{table}[htbp]
+    \centering
+    \caption{\quad Spearman Correlation of Different CBOW Models with Various Embedding Dimensions}
+    \label{tab:cbow_results}
+    \begin{tabular}{lccc}
+    \toprule
+    \textbf{Model Type} & \textbf{100-dim} & \textbf{300-dim} & \textbf{500-dim} \\
+    \midrule
+    CBOW            & 0.38         & 0.32         & -          \\
+    CBOW-Neg        & 0.21         & 0.20         & 0.15       \\
+    CBOW-Enhanced   & 0.22         & -         & -          \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Paraphrase Detection Task}
+
+For the paraphrase detection task, because we get the word embeddings from the pretrained model, we need to use the sentence embeddings to represent the sentence. Word embeddings are not quite suitable for the sentence-level task. To acquire the sentence embeddings, I use the average of the word embeddings in the sentence. Another method is to use the BERT score, which calculates the similarity between two sentences based on the cosine similarity of the word embeddings. The code for the BERT score is \texttt{cbow/evaluate\_sentences.py}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{\quad Model Performance Comparison (Accuracy and F1 Scores)}
+    \label{tab:model_results}
+    \begin{tabular}{lccccc}
+    \toprule
+    \textbf{Model} & \multicolumn{2}{c}{\textbf{Accuracy}} & \multicolumn{2}{c}{\textbf{F1 Score}} & \textbf{BERT-Style} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-6}
+     & Base & BERT & Base & BERT & Improvement \\ 
+    \midrule
+    MiniCPM-1B-sft-bf16 & 0.599 & 0.629 & 0.644 & 0.688 & +4.8\% \\
+    CBOW-100 & 0.648 & 0.649 & 0.706 & 0.692 & +0.1\% \\
+    CBOW-300 & 0.671 & 0.641 & 0.737 & 0.679 & -4.5\% \\
+    CBOW-Neg-100 & 0.659 & 0.652 & 0.721 & 0.697 & -1.1\% \\
+    CBOW-Neg-300 & 0.627 & 0.659 & 0.661 & 0.708 & +5.1\% \\
+    CBOW-Neg-500 & 0.660 & 0.657 & 0.714 & 0.706 & -0.5\% \\
+    CBOW-Enhanced-100 & 0.640 & 0.680 & 0.692 & 0.736 & +6.3\% \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+The results is shown in Table \ref{tab:model_results}. An interesting observation is that the pre-trained model has a worse performance than the CBOW model on the paraphrase detection task. Our model is trained on the small subset of the English Wikipedia, which is not enough to capture the sentence-level semantics. But the CBOW model has a better performance than the pre-trained model, which shows that sentence embeddings which are based on the word embeddings can not capture the sentence-level semantics well. We can also see this from the accuracy.
+
+\section{Disscussion}
+
+During the implementation of the Word2Vec model, I encounter some issues:
+
+\begin{itemize}
+    \item The training process is time-consuming. The negative sampling method is quite time-consuming, which is not efficient. I need to sample the negative samples for each positive sample, which is time-consuming. So I using the \texttt{gensim.models.Word2Vec} package to train the Word2Vec model. I find that it is much more efficient than the negative sampling method I implemented.
+    \item The paragraph detection task is quite challenging. Since I think the Word2Vec model is not suitable for the sentence-level task, I don't think the results can reflect the performance of the model. As the results show, the pre-trained model has a worse performance than the CBOW model, which is not reasonable. May be I can use BERT to get the sentence embeddings, which can capture the sentence-level semantics better.
+\end{itemize}
+
+The models are uploaded to the \href{https://cloud.tsinghua.edu.cn/d/c305e8f2d8f446e19fce/}{\texttt{Tsinghua Cloud}}. 
+
+
+\end{document}
